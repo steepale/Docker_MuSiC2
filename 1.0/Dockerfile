@@ -28,7 +28,7 @@ RUN apt-get update \
     && apt-get install -y sudo=1.8.21p2-3ubuntu1 \
     && sudo apt-get install -y build-essential=12.4ubuntu1 \
     git=1:2.17.1-1ubuntu0.4 \
-    cmake=3.10.2-1ubuntu2 \
+    cmake \
     curl=7.58.0-2ubuntu3.7 \
     cpanminus=1.7043-1 \
     libbz2-dev \
