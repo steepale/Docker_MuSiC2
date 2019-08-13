@@ -14,9 +14,9 @@
 #  AFFILIATION:  Michigan State University (MSU), East Lansing, MI, United States
 #				         USDA ARS Avian Disease and Oncology Lab (ADOL), East Lansing, MI, United States
 #				         Technical University of Munich (TUM), Weihenstephan, Germany
-#      VERSION:  1.0
+#      VERSION:  1.1
 #      CREATED:  2019.06.26
-#     REVISION:  ---
+#     REVISION:  2019.07.16
 #===============================================================================
 
 # Hardcode this version
@@ -31,7 +31,7 @@ RUN apt-get update \
     cmake=3.10.2-1ubuntu2 \
     curl=7.58.0-2ubuntu3.7 \
     cpanminus=1.7043-1 \
-    libbz2-dev=1.0.6-8.1ubuntu0.1 \
+    libbz2-dev \
     libgtest-dev=1.8.0-6 \
     libbam-dev=0.1.19-2 \
     zlib1g-dev=1:1.2.11.dfsg-0ubuntu2 \
@@ -50,10 +50,12 @@ RUN mkdir apps \
     && rm samtools-0.1.19.tar.bz2 \
     && cd samtools-0.1.19 \
     && make \
-    && export SAMTOOLS_DIR=$PWD \
-    && export SAMTOOLS_ROOT=$PWD \
-    && sudo mv samtools /usr/local/bin/
+    && export SAMTOOLS_ROOT="/apps/samtools-0.1.19" \
+    && sudo cp samtools /usr/local/bin/
 # Install Samtools and place in bin
+
+ENV SAMTOOLS_ROOT /apps/samtools-0.1.19
+# Set environmental variable for calcRoiCovg
 
 WORKDIR /apps
 # Change back to app directory
@@ -110,12 +112,18 @@ RUN sudo cpanm Test::Most@0.35 \
 # Install perl modules
 # Note: determine version with cpan -D <module-name>
 
-
 RUN git clone https://github.com/ding-lab/MuSiC2 \
     && cd MuSiC2 \
     && sudo cpanm MuSiC2-0.2.tar.gz \
-    rm /apps/MuSiC2/MuSiC2-0.2.tar.gz
-# Install MuSiC2
+    && rm /apps/MuSiC2/MuSiC2-0.2.tar.gz
+# Install MuSiC2 and log build stdout and stderr
+
+RUN mkdir /var/log/music2 \
+    && touch /var/log/music2/access.log \
+    && touch /var/log/music2/error.log \
+    && ln -sf /dev/stdout /var/log/music2/access.log \
+	&& ln -sf /dev/stderr /var/log/music2/error.log
+# forward request and error logs to docker log collector (from nginx official image)
 
 WORKDIR /
 
