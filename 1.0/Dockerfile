@@ -39,7 +39,7 @@ RUN apt-get update \
     libncurses-dev \
     liblzma-dev=5.2.2-1.3 \
     vim=2:8.0.1453-1ubuntu1.1 \
-    r-base:3.4.4-1ubuntu1
+    r-base
 # Update the apt-get in the Ubuntu image
 # Install the MuSiC2 dependencies
 # Note: use 'apt-cache policy <package-name>' to determine which package is installed
