@@ -1,8 +1,8 @@
 #===============================================================================
 #
 #         FILE: Dockerfile
-#    DEV USAGE: docker run -it -v /Users/Alec/Documents/Bioinformatics/MDV_Project/p0100_music/data:/mount_data --name music1 --rm ubuntu:latest
-#        USAGE: docker image build -t genome_music . # local image build
+#    DEV USAGE: docker run -it -v /Users/Alec/Documents/Bioinformatics/MDV_Project/p0100_music/data:/mount_data --name music2 --rm ubuntu:latest
+#        USAGE: docker image build -t steepale/20190626_music2:1.0 . # local image build
 #
 #  DESCRIPTION:  This Dockerfile will build MuSiC2 (Mutational Significance in Cancer version 2)
 # REQUIREMENTS:  ---
@@ -16,12 +16,17 @@
 #				         Technical University of Munich (TUM), Weihenstephan, Germany
 #      VERSION:  1.1
 #      CREATED:  2019.06.26
-#     REVISION:  2019.07.16
+#     REVISION:  2019.08.19
 #===============================================================================
 
-# Hardcode this version
-FROM ubuntu:18.04
 # Pull the Ubuntu OS image
+FROM ubuntu:18.04
+
+# Add this command to ensure no interactive builds
+# This docker file uses Eastern Standard Time, you can adjust the RUN command below to something that suits you if needed, but you probably can just leave it as is.
+# We add the "DEBIAN_FRONTEND=noninteractive" argument so that the rbase installation is not interactive
+RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+ENV DEBIAN_FRONTEND=noninteractive
 
 # EDIT: Hardcode all these versions 
 RUN apt-get update \
