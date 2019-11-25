@@ -2,7 +2,7 @@
 #
 #         FILE: Dockerfile
 #    DEV USAGE: docker run -it -v /Users/Alec/Documents/Bioinformatics/MDV_Project/p0100_music/data:/mount_data --name music2 --rm ubuntu:latest
-#        USAGE: docker image build -t steepale/20190626_music2:1.0 . # local image build
+#        USAGE: docker image build -t steepale/20190819_music2:1.1 . # local image build
 #
 #  DESCRIPTION:  This Dockerfile will build MuSiC2 (Mutational Significance in Cancer version 2)
 # REQUIREMENTS:  ---
@@ -21,6 +21,8 @@
 
 # Pull the Ubuntu OS image
 FROM ubuntu:18.04
+
+WORKDIR /
 
 # Add this command to ensure no interactive builds
 # This docker file uses Eastern Standard Time, you can adjust the RUN command below to something that suits you if needed, but you probably can just leave it as is.
@@ -42,7 +44,7 @@ RUN apt-get update \
     zlib1g-dev=1:1.2.11.dfsg-0ubuntu2 \
     wget=1.19.4-1ubuntu2.2 \
     libncurses-dev \
-    liblzma-dev=5.2.2-1.3 \
+    liblzma-dev \
     vim=2:8.0.1453-1ubuntu1.1 \
     r-base
 # Update the apt-get in the Ubuntu image
@@ -132,6 +134,10 @@ RUN mkdir /var/log/music2 \
 # forward request and error logs to docker log collector (from nginx official image)
 
 WORKDIR /
+
+# Only for local development
+#COPY /Volumes/Frishman_4TB/bams_wgs_2014/normal /Volumes/Frishman_4TB/bams_wgs_2014/normal
+#COPY /Volumes/Frishman_4TB/bams_wgs_2014/tumor /Volumes/Frishman_4TB/bams_wgs_2014/tumor
 
 CMD ["/bin/bash"]
 # This is the CMD command from the Ubuntu:18.04 image we FROM'ed
