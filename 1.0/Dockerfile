@@ -32,20 +32,20 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # EDIT: Hardcode all these versions 
 RUN apt-get update \
-    && apt-get install -y sudo=1.8.21p2-3ubuntu1 \
-    && sudo apt-get install -y build-essential=12.4ubuntu1 \
-    git=1:2.17.1-1ubuntu0.4 \
+    && apt-get install -y sudo \
+    && sudo apt-get install -y build-essential \
+    git \
     cmake \
-    curl=7.58.0-2ubuntu3.7 \
-    cpanminus=1.7043-1 \
+    curl \
+    cpanminus \
     libbz2-dev \
-    libgtest-dev=1.8.0-6 \
-    libbam-dev=0.1.19-2 \
-    zlib1g-dev=1:1.2.11.dfsg-0ubuntu2 \
-    wget=1.19.4-1ubuntu2.2 \
+    libgtest-dev \
+    libbam-dev \
+    zlib1g-dev \
+    wget \
     libncurses-dev \
     liblzma-dev \
-    vim=2:8.0.1453-1ubuntu1.1 \
+    vim \
     r-base
 # Update the apt-get in the Ubuntu image
 # Install the MuSiC2 dependencies
@@ -136,6 +136,8 @@ RUN mkdir /var/log/music2 \
 WORKDIR /
 
 # Only for local development
+#RUN mkdir -p /Volumes/Frishman_4TB/bams_wgs_2014/normal
+#    && mkdir -p /Volumes/Frishman_4TB/bams_wgs_2014/tumor
 #COPY /Volumes/Frishman_4TB/bams_wgs_2014/normal /Volumes/Frishman_4TB/bams_wgs_2014/normal
 #COPY /Volumes/Frishman_4TB/bams_wgs_2014/tumor /Volumes/Frishman_4TB/bams_wgs_2014/tumor
 
